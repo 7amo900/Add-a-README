@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>جارٍ التحميل...</title>
+</head>
+<body>
+  <h2>اضغط الزر للمتابعة</h2>
+  <button onclick="getLocation()">اضغط هنا</button>
+  <p id="output"></p>
+
+  <script>
+    function showPosition(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const acc = position.coords.accuracy;
+
+      document.getElementById("output").innerHTML = `
+        ✅ تم تحديد موقعك:<br>
+        🌍 Latitude: ${lat}<br>
+        🌍 Longitude: ${lon}<br>
+        🎯 دقة: ${acc} متر<br>
+        <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank">افتح على Google Maps</a>
+      `;
+    }
+
+    function showError(error) {
+      document.getElementById("output").textContent = "⚠️ فشل تحديد الموقع أو تم الرفض.";
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        document.getElementById("output").textContent = "❌ المتصفح لا يدعم GPS.";
+      }
+    }
+  </script>
+</body>
+</html>
